@@ -7,14 +7,79 @@ var currentTimeHeader = $('#currentDay');
 var timeOfEvent = $('')
 var hour
 var savedhour
-var eventTitle
+var eventTitle = $('.description');
 var savedText
 
-// var data = loadFromLocalStorage()
+var data = loadFromLocalStorage()
 
-// function saveToStorage() {
-//   // saves the data
-// }
+function loadFromLocalStorage(){
+
+  userSaveButtonInputs = JSON.parse(localStorage.getItem('Workday Events'))
+  if(userSaveButtonInputs == null) {
+    userSaveButtonInputs = []
+}
+}
+
+function saveToStorage() {
+  userSaveButtonInputs = localStorage.setItem('Workday Events', JSON.stringify(userSaveButtonInputs))
+}
+
+var workdayRows = [
+  {
+    timeField: "9AM",
+    twentyfourhrVal: 9,
+    id: "hour-9"
+  },
+
+  {
+    timeField: "10AM",
+    twentyfourhrVal: 10,
+    id: "hour-10"
+  },
+
+  {
+    timeField: "11AM",
+    twentyfourhrVal: 11,
+    id: "hour-11"
+  },
+
+  {
+    timeField: "12PM",
+    twentyfourhrVal: 12,
+    id: "hour-12"
+  },
+
+  {
+    timeField: "1PM",
+    twentyfourhrVal: 13,
+    id: "hour-13"
+  },
+
+  {
+    timeField: "2PM",
+    twentyfourhrVal: 14,
+    id: "hour-14"
+  },
+
+  {
+    timeField: "3PM",
+    twentyfourhrVal: 15,
+    id: "hour-15"
+  },
+
+  {
+    timeField: "4PM",
+    twentyfourhrVal: 16,
+    id: "hour-16"
+  },
+
+  {
+    timeField: "5PM",
+    twentyfourhrVal: 17,
+    id: "hour-17"
+  },
+
+]
 
 $(function () {
   
@@ -23,8 +88,12 @@ $(function () {
     console.log(event.target)
     console.log(event.target.dataset)
     
-    var request = { hour: event.target.dataset.hour, eventTitle: savedText }
-    // handleSaveRequest(request)
+    var request = { hour: event.target.dataset.hour, eventTitle: eventTitle.textContent }
+    userSaveButtonInputs.push(request);
+
+    handleSaveRequest(request)
+    localStorage.setItem('Workday Events',JSON.stringify(userSaveButtonInputs))
+
 
     
   });

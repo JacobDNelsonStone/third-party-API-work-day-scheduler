@@ -4,8 +4,30 @@
 var userSaveButtonInputs = []
 var currentTime = dayjs();
 var currentTimeHeader = $('#currentDay');
+var timeOfEvent = $('')
+var hour
+var savedhour
+var eventTitle
+var savedText
+
+// var data = loadFromLocalStorage()
+
+// function saveToStorage() {
+//   // saves the data
+// }
 
 $(function () {
+  
+  $('.saveBtn').on('click', function(event){
+    console.log("clicked");
+    console.log(event.target)
+    console.log(event.target.dataset)
+    
+    var request = { hour: event.target.dataset.hour, eventTitle: savedText }
+    // handleSaveRequest(request)
+
+    
+  });
 
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
@@ -26,9 +48,4 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
   currentTimeHeader.text(currentTime.format("dddd, MMMM D"));
-});
-
-$('#saveBtn').on('click', function(event){
-  $(this)
-
 });

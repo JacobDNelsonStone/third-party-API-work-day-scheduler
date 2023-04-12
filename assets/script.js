@@ -111,35 +111,39 @@ $(function () {
     for( let i = 0; i<workdayRows.length; i++ ) {
       // console.log(workdayRows[i].dataset)
       // console.log(twentyFourHrTime);
-      var newDivPast = $(`<div id="hour-${workdayRows[i].dataset}" class="row time-block past">
+      var newDivPast = $(`<div id="hour-" class="row time-block past">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea "class="col-8 col-md-10 description" rows="3"> </textarea>
+      <textarea id="textarea "class="col-8 col-md-10 description past" rows="3"> </textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
       </div>`);
       
-      var newDivPresent = $(`<div id="hour-${workdayRows[i].dataset}" class="row time-block present">
+      var newDivPresent = $(`<div id="hour-" class="row time-block present">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea" class="col-8 col-md-10 description" rows="3"> </textarea>
+      <textarea id="textarea" class="col-8 col-md-10 description present" rows="3"> </textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
       </div>`);
       
-      var newDivFuture = $(`<div id="hour-${workdayRows[i].dataset}" class="row time-block future">
+      var newDivFuture = $(`<div id="hour-" class="row time-block future">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea" class="col-8 col-md-10 description" rows="3"> </textarea>
+      <textarea id="textarea" class="col-8 col-md-10 description future" rows="3"> </textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
       </div>`);
+
+      console.log( workdayRows[i].dataset + "|" + twentyFourHrTime )
       
-      if( workdayRows[i].dataset == twentyFourHrTime ) {
+      if( workdayRows[i].twentyfourhrVal == twentyFourHrTime ) {
         mainContainer.append(newDivPresent)
-      } else if( workdayRows[i].dataset > twentyFourHrTime ) {
+      } else if( parseInt(workdayRows[i].twentyfourhrVal) > twentyFourHrTime ) {
+        console.log("future")
         mainContainer.append(newDivFuture) 
-      } else if ( workdayRows[i].dataset < twentyFourHrTime ) {
+        console.log("past")
+      } else if ( parseInt(workdayRows[i].twentyfourhrVal) < twentyFourHrTime ) {
         mainContainer.append(newDivPast)
       }
       
@@ -152,10 +156,25 @@ $(function () {
     console.log("clicked");
     console.log(event.target)
     console.log(event.target.dataset)
+
+    var textarea = $(this).parent().children("textarea");
+
+    console.log( $(this).data("hour") );
+    console.log(textarea.val());
+
+    // uopdate the global array with the new data
+    // stringify that array
+    // put that array into local storage
+
+    var newArr = [ ]
+    // iterate over current global array
+    // if the array obj isn't the one being changed; push it into new array
+
+    // push the new object from the input
     
     
     function defineUserSave(){
-      var request = [{ hour: event.target.dataset, eventName: eventText }]
+      var request = [{ hour: $(this).data("hour"), eventName: textarea.val() }]
       userSaveButtonInputs.push(request)
     };
     defineUserSave()

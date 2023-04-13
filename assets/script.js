@@ -22,8 +22,7 @@ function loadFromLocalStorage(){
     
   }
   userSaveButtonInputs = JSON.parse(localStorage.getItem('workdayEvents'))
-
-  return userSaveButtonInputs;
+ 
 }
 
 loadFromLocalStorage()

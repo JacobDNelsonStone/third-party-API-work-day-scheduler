@@ -13,6 +13,7 @@ var savedText
 var twentyFourHrTime = currentTime.format("H");
 var saveButton = $('button');
 var mainContainer = $('.container-lg')
+var newArray = []
 
 
 function loadFromLocalStorage(){
@@ -113,7 +114,7 @@ $(function () {
       // console.log(twentyFourHrTime);
       var newDivPast = $(`<div id="hour-" class="row time-block past">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea "class="col-8 col-md-10 description past" rows="3"> </textarea>
+      <textarea id="textarea "class="col-8 col-md-10 description past" rows="3"></textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
@@ -121,7 +122,7 @@ $(function () {
       
       var newDivPresent = $(`<div id="hour-" class="row time-block present">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea" class="col-8 col-md-10 description present" rows="3"> </textarea>
+      <textarea id="textarea" class="col-8 col-md-10 description present" rows="3"></textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
@@ -129,7 +130,7 @@ $(function () {
       
       var newDivFuture = $(`<div id="hour-" class="row time-block future">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea" class="col-8 col-md-10 description future" rows="3"> </textarea>
+      <textarea id="textarea" class="col-8 col-md-10 description future" rows="3"></textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
@@ -162,44 +163,55 @@ $(function () {
     console.log( $(this).data("hour") );
     console.log(textarea.val());
 
-    // uopdate the global array with the new data
+    // update the global array with the new data
+     var userSaveButtonInputs = { hour: $(this).data("hour"), eventName: textarea.val() } 
+      
     // stringify that array
-    // put that array into local storage
+    //defineUserSave()
+    console.log(userSaveButtonInputs);
 
-    var newArr = [ ]
+    function saveToStorage() {
+      localStorage.setItem('workdayEvents', JSON.stringify(userSaveButtonInputs))
+    };
+    saveToStorage()
+    console.log(userSaveButtonInputs);
+
+    // put that array into local storage
+    function loopOverUserArray(){
+      var newArray = [ ]
+      for(var i = 0; i<userSaveButtonInputs.length; i++ ){
+        
+
+        newArray.push(userSaveButtonInputs);
+        
+      }
+    }
+    loopOverUserArray()
     // iterate over current global array
+    // 
     // if the array obj isn't the one being changed; push it into new array
 
     // push the new object from the input
     
-    
-    function defineUserSave(){
-      var request = [{ hour: $(this).data("hour"), eventName: textarea.val() }]
-      userSaveButtonInputs.push(request)
-    };
-    defineUserSave()
-    function saveToStorage() {
-      userSaveButtonInputs = localStorage.setItem('workdayEvents', JSON.stringify(userSaveButtonInputs))
-    };
-    saveToStorage()
+    console.log(newArray)
     
     function handleSaveRequest(userSaveButtonInputs) {
       localStorage.setItem('workdayEvents', JSON.stringify(userSaveButtonInputs))
-      JSON.parse(localStorage.getItem('workdayEvents', JSON.stringify(userSaveButtonInputs)))
+      newArray = JSON.parse(localStorage.getItem('workdayEvents'))
     }
     handleSaveRequest()
     
     
 });
-// let nineAM = $('hour-09 .col-8').val();
-// let tenAM = $('hour-10 .col-8').val();
-// let elevenAM = $('hour-11 .col-8').val();
-// let noon = $('hour-12 .col-8').val();
-// let onePM = $('hour-13 .col-8').val();
-// let twoPM = $('hour-14 .col-8').val();
-// let threePM = $('hour-15 .col-8').val();
-// let fourPM = $('hour-16 .col-8').val();
-// let fivePM = $('hour-17 .col-8').val();
+let nineAM = $('.saveBtn').parent().children("div").val();
+let tenAM = $('hour-10 .col-8').val();
+let elevenAM = $('hour-11 .col-8').val();
+let noon = $('hour-12 .col-8').val();
+let onePM = $('hour-13 .col-8').val();
+let twoPM = $('hour-14 .col-8').val();
+let threePM = $('hour-15 .col-8').val();
+let fourPM = $('hour-16 .col-8').val();
+let fivePM = $('hour-17 .col-8').val();
 
 // let request = [ nineAM, tenAM, elevenAM, noon, onePM, twoPM, threePM, fourPM, fivePM ]
 

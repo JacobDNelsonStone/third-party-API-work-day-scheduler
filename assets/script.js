@@ -20,8 +20,10 @@ function loadFromLocalStorage(){
   if(userSaveButtonInputs == null) {
     userSaveButtonInputs = []
     
-    userSaveButtonInputs = JSON.parse(localStorage.getItem('workdayEvents'))
   }
+  userSaveButtonInputs = JSON.parse(localStorage.getItem('workdayEvents'))
+
+  return userSaveButtonInputs;
 }
 
 loadFromLocalStorage()
@@ -114,7 +116,7 @@ $(function () {
       // console.log(twentyFourHrTime);
       var newDivPast = $(`<div id="hour-" class="row time-block past">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea "class="col-8 col-md-10 description past" rows="3"></textarea>
+      <textarea id="hour-${workdayRows[i].dataset} "class="col-8 col-md-10 description past" rows="3"></textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
@@ -122,7 +124,7 @@ $(function () {
       
       var newDivPresent = $(`<div id="hour-" class="row time-block present">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea" class="col-8 col-md-10 description present" rows="3"></textarea>
+      <textarea id="hour-${workdayRows[i].dataset}" class="col-8 col-md-10 description present" rows="3"></textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
@@ -130,7 +132,7 @@ $(function () {
       
       var newDivFuture = $(`<div id="hour-" class="row time-block future">
       <div class="col-2 col-md-1 hour text-center py-3">${workdayRows[i].timeField}</div>
-      <textarea id="textarea" class="col-8 col-md-10 description future" rows="3"></textarea>
+      <textarea id="hour-${workdayRows[i].dataset}" class="col-8 col-md-10 description future" rows="3"></textarea>
       <button class="btn saveBtn col-2 col-md-1" aria-label="save" data-hour="${workdayRows[i].dataset}">
       <i class="fas fa-save" aria-hidden="true"></i>
       </button>
@@ -154,18 +156,57 @@ $(function () {
   makeNewDiv();
   
   $('.saveBtn').on('click', function(event){
+    event.preventDefault()
     console.log("clicked");
     console.log(event.target)
     console.log(event.target.dataset)
 
-    var textarea = $(this).parent().children("textarea");
+    //var textarea = $(this).parent().children("textarea");
 
     console.log( $(this).data("hour") );
-    console.log(textarea.val());
+    //console.log(textarea.val());
 
     // update the global array with the new data
-     var userSaveButtonInputs = { hour: $(this).data("hour"), eventName: textarea.val() } 
-      
+     var userSaveButtonInputs = [
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-09'))[1].value 
+      },
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-10'))[1].value 
+      },
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-11'))[1].value 
+      },
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-12'))[1].value 
+      },
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-13'))[1].value 
+      },
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-14'))[1].value 
+      },
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-15'))[1].value 
+      },
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-16'))[1].value 
+      },
+      { 
+        hour: $(this).data("hour"), 
+        eventName: $(this).parent().children($('#hour-17'))[1].value 
+      }
+  
+  ]
+    
     // stringify that array
     //defineUserSave()
     console.log(userSaveButtonInputs);
@@ -177,41 +218,41 @@ $(function () {
     console.log(userSaveButtonInputs);
 
     // put that array into local storage
-    function loopOverUserArray(){
-      var newArray = [ ]
-      for(var i = 0; i<userSaveButtonInputs.length; i++ ){
+    // function loopOverUserArray(){
+    //   var newArray = [ ]
+    //   for(var i = 0; i<userSaveButtonInputs.length; i++ ){
         
 
-        newArray.push(userSaveButtonInputs);
+    //     newArray.push(userSaveButtonInputs);
         
-      }
-    }
-    loopOverUserArray()
+    //   }
+    // }
+    // loopOverUserArray()
     // iterate over current global array
     // 
     // if the array obj isn't the one being changed; push it into new array
 
     // push the new object from the input
     
-    console.log(newArray)
+    // console.log(newArray)
     
     function handleSaveRequest(userSaveButtonInputs) {
-      localStorage.setItem('workdayEvents', JSON.stringify(userSaveButtonInputs))
-      newArray = JSON.parse(localStorage.getItem('workdayEvents'))
+      userSaveButtonInputs = JSON.parse(localStorage.getItem('workdayEvents'))
     }
     handleSaveRequest()
+    saveToStorage()
     
     
 });
-let nineAM = $('.saveBtn').parent().children("div").val();
-let tenAM = $('hour-10 .col-8').val();
-let elevenAM = $('hour-11 .col-8').val();
-let noon = $('hour-12 .col-8').val();
-let onePM = $('hour-13 .col-8').val();
-let twoPM = $('hour-14 .col-8').val();
-let threePM = $('hour-15 .col-8').val();
-let fourPM = $('hour-16 .col-8').val();
-let fivePM = $('hour-17 .col-8').val();
+// let nineAM = $('.saveBtn').parent().children("div").val();
+// let tenAM = $('hour-10 .col-8').val();
+// let elevenAM = $('hour-11 .col-8').val();
+// let noon = $('hour-12 .col-8').val();
+// let onePM = $('hour-13 .col-8').val();
+// let twoPM = $('hour-14 .col-8').val();
+// let threePM = $('hour-15 .col-8').val();
+// let fourPM = $('hour-16 .col-8').val();
+// let fivePM = $('hour-17 .col-8').val();
 
 // let request = [ nineAM, tenAM, elevenAM, noon, onePM, twoPM, threePM, fourPM, fivePM ]
 
